@@ -1,6 +1,8 @@
-package com.example.spokentime.core.formatter
+package com.example.spokentime.core.api
+
 
 import com.example.spokentime.core.exception.NotSupportedLocaleException
+import com.example.spokentime.core.formatter.BritishSpokenTimeFormatter
 import spock.lang.Specification
 import spock.lang.Unroll
 
