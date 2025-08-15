@@ -33,7 +33,7 @@
   <dependencies>
     <dependency>
       <groupId>com.example.spokentime</groupId>
-      <artifactId>spoken-time-formatter-core</artifactId>
+      <artifactId>core</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>

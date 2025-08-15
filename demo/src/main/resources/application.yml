@@ -1,3 +1,12 @@
 spring:
   application:
-    name: demo
+    name: spoken-time-demo
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/time
+
+logging:
+  level:
+    root: INFO
