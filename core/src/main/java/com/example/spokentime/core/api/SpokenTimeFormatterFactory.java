@@ -22,6 +22,6 @@ public final class SpokenTimeFormatterFactory {
    */
   public static SpokenTimeFormatter forLocale(String localeCode) {
     Locale locale = localeParser.parseLocale(localeCode);
-    return LocaleFormatterMapping.getFormatterClass(locale);
+    return LocaleFormatterMapping.getFormatter(locale);
   }
 }
