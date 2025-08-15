@@ -9,7 +9,7 @@ class LocaleFormatterMappingSpec extends Specification {
   @Unroll
   def "getFormatterClass should return BritishSpokenTimeFormatter for valid locale '#locale'"() {
     expect:
-    def formatter = LocaleFormatterMapping.getFormatterClass(locale)
+    def formatter = LocaleFormatterMapping.getFormatter(locale)
     formatter instanceof BritishSpokenTimeFormatter
 
     where:
@@ -19,7 +19,7 @@ class LocaleFormatterMappingSpec extends Specification {
   @Unroll
   def "getFormatterClass should throw NotSupportedLocaleException for unsupported locale '#locale'"() {
     when:
-    LocaleFormatterMapping.getFormatterClass(locale)
+    LocaleFormatterMapping.getFormatter(locale)
 
     then:
     def e = thrown(NotSupportedLocaleException)

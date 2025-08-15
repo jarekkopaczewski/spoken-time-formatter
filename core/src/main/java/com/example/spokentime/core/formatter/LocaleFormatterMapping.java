@@ -14,7 +14,7 @@ public class LocaleFormatterMapping {
     Locale.UK.toLanguageTag(), new BritishSpokenTimeFormatter()
   );
 
-  public static SpokenTimeFormatter getFormatterClass(Locale locale) {
+  public static SpokenTimeFormatter getFormatter(Locale locale) {
     var localeCode = locale.toLanguageTag();
 
     if (languageTagToFormatter.containsKey(localeCode)) {
