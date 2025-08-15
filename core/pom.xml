@@ -18,9 +18,15 @@
     <spock.version>2.4-M6-groovy-4.0</spock.version>
     <gmavenplus.version>4.2.1</gmavenplus.version>
     <maven.surefire.version>3.5.3</maven.surefire.version>
+    <commons.lang.version>3.18.0</commons.lang.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons.lang.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
