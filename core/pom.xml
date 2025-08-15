@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <name>Core</name>
-  <artifactId>core</artifactId>
+  <artifactId>spoken-time-formatter-core</artifactId>
   <packaging>jar</packaging>
 
   <properties>
