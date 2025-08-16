@@ -4,12 +4,12 @@ import com.example.spokentime.core.exception.NotSupportedLocaleException
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class LocaleFormatterMappingSpec extends Specification {
+class LocaleFormatterRegistrySpec extends Specification {
 
   @Unroll
   def "getFormatterClass should return BritishSpokenTimeFormatter for valid locale '#locale'"() {
     expect:
-    def formatter = LocaleFormatterMapping.getFormatter(locale)
+    def formatter = LocaleFormatterRegistry.getFormatter(locale)
     formatter instanceof BritishSpokenTimeFormatter
 
     where:
@@ -19,7 +19,7 @@ class LocaleFormatterMappingSpec extends Specification {
   @Unroll
   def "getFormatterClass should throw NotSupportedLocaleException for unsupported locale '#locale'"() {
     when:
-    LocaleFormatterMapping.getFormatter(locale)
+    LocaleFormatterRegistry.getFormatter(locale)
 
     then:
     def e = thrown(NotSupportedLocaleException)

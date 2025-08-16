@@ -6,12 +6,12 @@ import com.example.spokentime.core.formatter.BritishSpokenTimeFormatter
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class SpokenTimeFormatterFactorySpec extends Specification {
+class SpokenTimeFormatterProviderSpec extends Specification {
 
   @Unroll
   def "SpokenTimeFormatterFactory forLocale should throw NotSupportedLocaleException for invalid locale input"() {
     when:
-    SpokenTimeFormatterFactory.forLocale(locale)
+    SpokenTimeFormatterProvider.forLocale(locale)
 
     then:
     thrown(NotSupportedLocaleException)
@@ -28,7 +28,7 @@ class SpokenTimeFormatterFactorySpec extends Specification {
   @Unroll
   def "SpokenTimeFormatterFactory forLocale should throw NotSupportedLocaleException for valid but unsupported locale"() {
     when:
-    SpokenTimeFormatterFactory.forLocale(locale)
+    SpokenTimeFormatterProvider.forLocale(locale)
 
     then:
     thrown(NotSupportedLocaleException)
@@ -42,7 +42,7 @@ class SpokenTimeFormatterFactorySpec extends Specification {
   @Unroll
   def "SpokenTimeFormatterFactory should return BritishSpokenTimeFormatter for valid locale '#locale'"() {
     when:
-    def formatter = SpokenTimeFormatterFactory.forLocale(locale)
+    def formatter = SpokenTimeFormatterProvider.forLocale(locale)
 
     then:
     formatter instanceof BritishSpokenTimeFormatter

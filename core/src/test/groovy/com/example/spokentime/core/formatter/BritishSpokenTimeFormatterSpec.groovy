@@ -5,7 +5,7 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class BritishSpokenTimeFormatterSpec extends Specification {
-  private final BritishSpokenTimeFormatter formatter = new BritishSpokenTimeFormatter()
+  private final BritishSpokenTimeFormatter formatter = new BritishSpokenTimeFormatter(LocaleFormatterRegistry.NUMBER_BUNDLE_NAME)
 
   @Unroll
   def "full hour #hours:#minutes should return '#expected'"() {
@@ -76,5 +76,16 @@ class BritishSpokenTimeFormatterSpec extends Specification {
     0     | 60
     12    | 84
     25    | 12
+  }
+
+  def "should throw TimeProcessingException when bundle key is missing"() {
+    given:
+    def invalidFormatter = new BritishSpokenTimeFormatter("empty_numbers")
+
+    when:
+    invalidFormatter.format(12, 0)
+
+    then:
+    thrown(TimeProcessingException)
   }
 }
