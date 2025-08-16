@@ -2,6 +2,17 @@
 
 A simple Java library for converting digital time (`hours` / `minutes`) into **spoken time strings** for different locales.
 
+## Table of Contents
+
+1. [Assumptions & Design Decisions](#assumptions--design-decisions)
+2. [Spoken Time Rules](#spoken-time-rules)
+3. [Project Structure](#project-structure)
+4. [Requirements](#requirements)
+6. [Clone and Build](#clone-and-build)
+7. [Testing the Demo REST API](#testing-the-demo-rest-api)
+   - [Example Request with curl](#example-request-with-curl)
+8. [SpokenTimeFormatter API](#spokentimeformatter-api)
+
 ## Assumptions & Design Decisions
 
 - The library converts digital time into spoken time strings.
@@ -9,10 +20,13 @@ A simple Java library for converting digital time (`hours` / `minutes`) into **s
 - Structured to easily support additional languages/locales via new formatters.
 - Code is maintainable, extensible, and fully tested for production readiness.
 - Use Groovy Spock for simple more readable tests
-- Initially used separate integers for hours and minutes, but ideally a single `String` input (e.g., "20:40") could be used — not a major issue, as it can be handled with parsing.
+- Initially used separate integers for hours and minutes, but ideally a single `String` input (e.g., "20:40") could be used — not a major
+  issue, as it can be handled with parsing.
 
-## Cases
-I noticed that one example in the PDF (`6:32 -> "six thirty two"`) might not align with typical British spoken time conventions, especially compared to the next example (`7:35 -> "twenty five to eight"`).
+## Spoken Time Rules
+
+I noticed that one example in the PDF (`6:32 -> "six thirty two"`) might not align with typical British spoken time conventions, especially
+compared to the next example (`7:35 -> "twenty five to eight"`).
 
 For my implementation, I assumed the following rules:
 
@@ -30,15 +44,19 @@ The project contains **two modules**:
 2. **Demo module**: Provides a simple Spring Boot REST controller to test the library and demonstrate usage.
 
 ## Requirements
+
 - Java 17+ (tested with OpenJDK 17)
 - Maven 3.8+ (for building the library)
 - IntelliJ IDEA or another Java IDE (optional, recommended for demo)
- 
+
 ## Clone and Build
+
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/jarekkopaczewski/spoken-time-formatter.git
 ```
+
 2. Open IntelliJ and create a new project from existing source.
 3. Import the project as a Maven project.
 4. Sync Maven in IntelliJ to download dependencies.
@@ -58,5 +76,52 @@ Default and only supported locale is en-GB, so its not required param.
 
 ```bash
 curl "http://localhost:8080/api/time/spoken?hours=16&minutes=12"
-curl "http://localhost:8080/api/time/spoken?hours=16&minutes=12&locale=en-GB"
+```
+_Expected output: "twelve past four"_
 
+```bash
+curl "http://localhost:8080/api/time/spoken?hours=12&minutes=0&locale=en-GB"
+```
+_Expected output: "noon"_
+
+## SpokenTimeFormatter API
+
+The `SpokenTimeFormatter` API allows you to convert hours and minutes into a human-readable spoken time string for a specific locale.
+
+### Key Interfaces and Classes
+
+- `SpokenTimeFormatter` – Functional interface for formatting time into spoken strings.
+- `SpokenTimeFormatterProvider` – Factory/provider to get a `SpokenTimeFormatter` instance for a given locale.
+- Exceptions:
+  - `NotSupportedLocaleException` – Thrown when the provided locale is not supported.
+  - `TimeProcessingException` – Thrown when invalid hours or minutes are provided or other exception occurred while processing.
+
+### Usage
+
+```java
+import com.example.spokentime.core.api.SpokenTimeFormatter;
+import com.example.spokentime.core.api.SpokenTimeFormatterProvider;
+import com.example.spokentime.core.exception.NotSupportedLocaleException;
+import com.example.spokentime.core.exception.TimeProcessingException;
+
+public class ExampleUsage {
+    public static void main(String[] args) {
+        try {
+            // Get formatter for UK English
+            SpokenTimeFormatter formatter = SpokenTimeFormatterProvider.forLocale("en-GB");
+
+            // Format a time
+            String spokenTime = formatter.format(12, 0);
+            System.out.println(spokenTime); // e.g., "noon"
+
+            // Another example
+            spokenTime = formatter.format(14, 45);
+            System.out.println(spokenTime); // e.g., "quarter to three"
+
+        } catch (NotSupportedLocaleException e) {
+            System.err.println("Locale not supported: " + e.getMessage());
+        } catch (TimeProcessingException e) {
+            System.err.println("Invalid time: " + e.getMessage());
+        }
+    }
+}

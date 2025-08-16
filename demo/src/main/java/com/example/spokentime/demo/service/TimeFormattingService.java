@@ -1,7 +1,7 @@
 package com.example.spokentime.demo.service;
 
 import com.example.spokentime.core.api.SpokenTimeFormatter;
-import com.example.spokentime.core.api.SpokenTimeFormatterFactory;
+import com.example.spokentime.core.api.SpokenTimeFormatterProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public class TimeFormattingService {
 
   public String toSpokenTime(int hours, int minutes, String localeCode) {
     SpokenTimeFormatter formatter = localeToFormatter.computeIfAbsent(
-      localeCode, SpokenTimeFormatterFactory::forLocale
+      localeCode, SpokenTimeFormatterProvider::forLocale
     );
     return formatter.format(hours, minutes);
   }
